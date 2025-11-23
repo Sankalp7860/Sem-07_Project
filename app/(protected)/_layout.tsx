@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Tabs, useRouter, useSegments } from 'expo-router';
 import { useAuth } from '@/lib/auth-context';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { Home, Camera, Briefcase, User } from 'lucide-react-native';
+import { Home, Camera, Briefcase, Bot, User } from 'lucide-react-native';
 
 export default function ProtectedLayout() {
   const { user, loading } = useAuth();
@@ -77,6 +77,15 @@ export default function ProtectedLayout() {
           title: 'Job Check',
           tabBarIcon: ({ color, size }) => (
             <Briefcase color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="chatbot"
+        options={{
+          title: 'Chatbot',
+          tabBarIcon: ({ color, size }) => (
+            <Bot color={color} size={size} />
           ),
         }}
       />
