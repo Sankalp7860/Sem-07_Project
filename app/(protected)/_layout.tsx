@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Tabs, useRouter, useSegments } from 'expo-router';
 import { useAuth } from '@/lib/auth-context';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { Home, Camera, Briefcase, User } from 'lucide-react-native';
 
 export default function ProtectedLayout() {
   const { user, loading } = useAuth();
@@ -27,11 +28,68 @@ export default function ProtectedLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="home" />
-      <Stack.Screen name="deepfake" />
-      <Stack.Screen name="jobcheck" />
-    </Stack>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#6366f1',
+        tabBarInactiveTintColor: '#9ca3af',
+        tabBarStyle: {
+          backgroundColor: 'white',
+          borderTopWidth: 1,
+          borderTopColor: '#e5e7eb',
+          paddingTop: 8,
+          paddingBottom: 8,
+          height: 70,
+          elevation: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+          marginTop: 4,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Home color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="deepfake"
+        options={{
+          title: 'Deepfake',
+          tabBarIcon: ({ color, size }) => (
+            <Camera color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="jobcheck"
+        options={{
+          title: 'Job Check',
+          tabBarIcon: ({ color, size }) => (
+            <Briefcase color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <User color={color} size={size} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
 

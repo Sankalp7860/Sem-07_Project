@@ -9,18 +9,12 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/lib/auth-context';
-import { Button } from '@/components/Button';
-import { Shield, Camera, Briefcase, LogOut } from 'lucide-react-native';
+import { Shield, Camera, Briefcase } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { signOut, user } = useAuth();
-
-  const handleLogout = async () => {
-    await signOut();
-    router.replace('/auth/login');
-  };
+  const { user } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,12 +28,6 @@ export default function HomeScreen() {
               <Text style={styles.headerTitle}>TruthGuard</Text>
               <Text style={styles.headerSubtitle}>{user?.email || 'User'}</Text>
             </View>
-            <TouchableOpacity
-              onPress={handleLogout}
-              style={styles.logoutButton}
-            >
-              <LogOut color="white" size={24} />
-            </TouchableOpacity>
           </View>
 
           <View style={styles.headerTagline}>
@@ -69,9 +57,6 @@ export default function HomeScreen() {
                 </Text>
               </View>
             </View>
-            <View style={styles.cardBadge1}>
-              <Text style={styles.badgeText1}>Powered by Reality Defender</Text>
-            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -88,9 +73,6 @@ export default function HomeScreen() {
                   Check job postings for signs of scams and fraud
                 </Text>
               </View>
-            </View>
-            <View style={styles.cardBadge2}>
-              <Text style={styles.badgeText2}>Powered by Google Gemini</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -139,14 +121,10 @@ const styles = StyleSheet.create({
     color: '#c7d2fe',
     fontSize: 14,
   },
-  logoutButton: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    borderRadius: 50,
-    padding: 12,
-  },
   headerTagline: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 24,
   },
   headerText: {
     color: 'white',
@@ -211,28 +189,6 @@ const styles = StyleSheet.create({
     color: '#4b5563',
     fontSize: 14,
     lineHeight: 20,
-  },
-  cardBadge1: {
-    backgroundColor: '#e0e7ff',
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  cardBadge2: {
-    backgroundColor: '#ede9fe',
-    borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  badgeText1: {
-    color: '#4338ca',
-    fontWeight: '500',
-    fontSize: 13,
-  },
-  badgeText2: {
-    color: '#6d28d9',
-    fontWeight: '500',
-    fontSize: 13,
   },
   footer: {
     paddingHorizontal: 24,
