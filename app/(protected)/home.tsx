@@ -25,7 +25,7 @@ export default function HomeScreen() {
         >
           <View style={styles.headerContent}>
             <View>
-              <Text style={styles.headerTitle}>TruthGuard</Text>
+              <Text style={styles.headerTitle}>TruthGaurd</Text>
               <Text style={styles.headerSubtitle}>{user?.email || 'User'}</Text>
             </View>
           </View>

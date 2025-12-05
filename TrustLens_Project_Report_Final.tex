@@ -1,0 +1,631 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{lmodern}
+\usepackage{tocbibind}
+\usepackage{tocloft}
+
+% Adjust the left margin of the table of contents
+\setlength{\cftindent}{0.5em}
+\setlength{\cftsecindent}{0.8em}
+\setlength{\cftsubsecindent}{1.5em}
+\setlength{\cftsubsubsecindent}{3em}
+
+% Width of the number boxes
+\setlength{\cftsecnumwidth}{1.5em}
+\setlength{\cftsubsecnumwidth}{2em}
+\setlength{\cftsubsubsecnumwidth}{2.5em}
+
+% Define beautiful colors
+\definecolor{primarycolor}{HTML}{2c3e50}
+\definecolor{secondarycolor}{HTML}{000000}
+\definecolor{accentcolor}{HTML}{000000}
+\definecolor{lightgray}{HTML}{ecf0f1}
+\definecolor{darkgray}{HTML}{7f8c8d}
+
+% Title and section formatting
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{primarycolor}}
+{\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{black}}
+{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries\color{black}}
+{\thesubsubsection}{1em}{}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    pdfborderstyle={/S/U/W 1}
+}
+
+% Custom list formatting
+\setlist[itemize]{leftmargin=*,label=\textcolor{black}{$\bullet$}}
+
+% Header and footer setup
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0.3pt}
+\fancyhead[L]{\textcolor{primarycolor}{TrustLens Project}}
+\fancyhead[R]{\textcolor{primarycolor}{\thepage}}
+
+% Set detailed ToC
+\setcounter{tocdepth}{3}
+
+% Define consistent tcolorbox styles
+\tcbset{
+    enhanced,
+    colback=lightgray!30,
+    colframe=primarycolor,
+    arc=2mm,
+    boxrule=0.5pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=primarycolor,
+}
+
+% Define custom box styles for different sections
+\newtcolorbox{primarybox}[1][]{
+    enhanced,
+    colback=primarycolor!5,
+    colframe=primarycolor,
+    arc=2mm,
+    boxrule=0.5pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=primarycolor, 
+    title=#1
+}
+
+\newtcolorbox{secondarybox}[1][]{
+    enhanced,
+    colback=secondarycolor!5,
+    colframe=secondarycolor,
+    arc=2mm,
+    boxrule=0.5pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=secondarycolor,
+    title=#1
+}
+
+\newtcolorbox{accentbox}[1][]{
+    enhanced,
+    colback=accentcolor!5,
+    colframe=accentcolor,
+    arc=2mm,
+    boxrule=0.5pt,
+    fonttitle=\bfseries\color{white},
+    coltitle=accentcolor,
+    title=#1
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\onehalfspacing
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+\begin{center}
+
+{\LARGE \textbf{TrustLens - AI-Powered Fraud Detection \\ Mobile Application for Deepfakes and Job Scams}}\\[2cm]
+
+\includegraphics[width=5cm]{icon2.png}\\[2cm]
+
+{\large \textbf{Sankalp Gupta (2201176)}}\\[0.5cm]
+
+{\large Advisor: Dr. Angshuman Jana}\\[1cm]
+
+{\large Department of Computer Science and Engineering\\
+Indian Institute of Information Technology Guwahati}\\[2cm]
+
+{\large This report is submitted for the course of\\
+\textit{CS400 : Project-II}}\\[2cm]
+
+\vfill
+
+{\large IIIT Guwahati \hfill November 2025}
+
+\end{center}
+\end{titlepage}
+
+% Table of contents
+\tableofcontents
+\thispagestyle{fancy}
+\clearpage
+
+\section{Introduction}
+
+\begin{primarybox}[Overview]
+\textbf{TrustLens} is a comprehensive fraud detection mobile application designed to protect users from deepfake media and fraudulent job postings. The app leverages artificial intelligence and machine learning to provide real-time threat detection and analysis, making digital fraud prevention accessible to everyone.
+
+In today's digital age, deepfake technology has evolved from a technical curiosity to a significant threat to digital trust and personal security. Simultaneously, online job platforms have become breeding grounds for sophisticated employment scams. TrustLens addresses these critical needs by combining advanced machine learning models with an intuitive mobile interface, enabling users to verify the authenticity of digital content and job postings before interaction.
+
+The application integrates multiple security features including image/video deepfake detection, job posting fraud analysis, an AI-powered security chatbot, and a community platform for sharing threat intelligence. By providing instant threat assessment with confidence scores and detailed explanations, TrustLens empowers users to make informed decisions about their digital interactions.
+
+Built with modern technologies including React Native for cross-platform compatibility, Flask-based ML services for intelligent threat detection, and Supabase for robust authentication and data management, TrustLens represents a holistic approach to mobile fraud prevention that prioritizes both security and user experience.
+\end{primarybox}
+
+\section{App Purpose}
+
+TrustLens addresses the growing concern of digital fraud and online deception in today's interconnected world. With the increasing sophistication of deepfake technology and job posting scams, users need a reliable tool to verify the authenticity of digital content before interaction. The application serves to:
+
+\begin{itemize}
+    \item Detect and analyze deepfake images and videos
+    \item Identify fraudulent job postings to protect job seekers from employment scams
+    \item Provide real-time fraud detection using AI/ML models
+    \item Educate users about fraud threats through an AI assistant powered by Google Gemini Pro
+    \item Create a community platform for sharing security insights and experiences
+    \item Track and monitor detection activity for user awareness
+\end{itemize}
+
+The app's AI-powered detection system provides instant analysis of potential threats, helping users make informed decisions about their digital interactions and protecting them from financial and emotional harm.
+
+\section{Target Audience}
+
+TrustLens targets a diverse audience of individuals vulnerable to digital fraud, including:
+
+\begin{itemize}
+    \item Job seekers who encounter suspicious job postings on online platforms
+    \item Social media users exposed to deepfake videos and manipulated media
+    \item Journalists and fact-checkers who need to verify media authenticity
+    \item Elderly users vulnerable to sophisticated digital scams
+    \item Students and young professionals entering the job market
+    \item Business professionals who conduct important communications through digital channels
+    \item Online shoppers who encounter suspicious content
+\end{itemize}
+
+The app is particularly valuable for users who frequently consume social media content, participate in online job markets, or need to verify the authenticity of digital media.
+
+\section{Core Features}
+
+\subsection{AI-Powered Fraud Detection}
+
+The core functionality of TrustLens revolves around intelligent fraud detection using machine learning models. These features enable users to analyze and verify potentially fraudulent content before interaction.
+
+\subsubsection{Deepfake Detection}
+\begin{primarybox}[Deepfake Detection]
+The Deepfake Detection system analyzes images and videos for signs of AI manipulation and synthetic content generation.
+\begin{itemize}
+    \item \textbf{Image analysis:} Upload PNG, JPG, JPEG images for deepfake detection
+    \item \textbf{Video analysis:} Supports MP4, AVI, MOV video formats for frame-by-frame analysis
+    \item \textbf{CNN-based detection:} Pretrained convolutional neural network identifies manipulation patterns
+    \item \textbf{Multi-factor analysis:} Blur detection, artifact identification, and consistency checking
+    \item \textbf{Risk scoring:} 0-100 scale indicating likelihood of deepfake content
+    \item \textbf{Real-time processing:} Results returned within 30-40 seconds depending on file size
+\end{itemize}
+\end{primarybox}
+
+\subsubsection{Job Fraud Detection}
+\begin{primarybox}[Job Fraud Detection]
+The Job Fraud Detector analyzes job postings for scam indicators and fraudulent patterns using natural language processing.
+\begin{itemize}
+    \item \textbf{Text analysis:} Examines job title, description, requirements, and salary information
+    \item \textbf{Keyword detection:} Identifies 50+ known fraud indicators and suspicious phrases
+    \item \textbf{Pattern recognition:} Detects unrealistic salary claims and urgency tactics
+    \item \textbf{Legitimacy validation:} Recognizes authentic employment signals like benefits and career growth
+    \item \textbf{Company verification:} Validates company name presence and credibility
+    \item \textbf{Risk assessment:} Calculates fraud probability with specific red flags
+    \item \textbf{Instant results:} Analysis completed in under 30 seconds
+\end{itemize}
+\end{primarybox}
+
+\subsection{User Features}
+
+Beyond fraud detection, TrustLens provides comprehensive user engagement features including AI assistance, community interaction, and robust security measures.
+
+\subsubsection{AI Security Assistant}
+\begin{primarybox}[AI Assistant]
+An intelligent chatbot powered by Google Gemini Pro that provides personalized fraud prevention guidance and answers security-related questions.
+\begin{itemize}
+    \item \textbf{Gemini Pro integration:} Leverages Google's advanced AI model for accurate responses
+    \item \textbf{Context-aware chatbot:} Understands fraud detection context and provides relevant advice
+    \item \textbf{Specialized knowledge:} Trained on deepfakes, job scams, and online security best practices
+    \item \textbf{Natural explanations:} Explains threats in simple, understandable language
+    \item \textbf{Interactive Q\&A:} Ask any security-related question and get instant answers
+    \item \textbf{Conversation history:} Maintains chat context for coherent interactions
+\end{itemize}
+\end{primarybox}
+
+\subsubsection{Community Platform}
+\begin{primarybox}[Community Platform]
+A social platform where users can share fraud experiences, discuss threats, and learn from collective security intelligence.
+\begin{itemize}
+    \item \textbf{Experience sharing:} Post detailed accounts of fraud encounters with descriptions
+    \item \textbf{Rich content creation:} Create posts with titles and detailed context
+    \item \textbf{Discussion system:} Comment on posts to engage in security conversations
+    \item \textbf{Engagement features:} Like posts and comments to highlight valuable contributions
+    \item \textbf{Admin moderation:} Designated admin ensures content quality and platform safety
+    \item \textbf{User tracking:} Monitor your contributions and community activity
+    \item \textbf{Real-time feed:} Stay updated on latest fraud reports and discussions
+\end{itemize}
+\end{primarybox}
+
+\subsubsection{Authentication System}
+\begin{primarybox}[Authentication System]
+A secure authentication system powered by Supabase that protects user accounts with industry-standard encryption and token-based session management.
+\begin{itemize}
+    \item \textbf{Supabase Auth:} Enterprise-grade authentication infrastructure
+    \item \textbf{Email/password login:} Secure credential-based authentication
+    \item \textbf{JWT sessions:} Token-based authentication for secure API access
+    \item \textbf{Password encryption:} Industry-standard hashing protects user credentials
+    \item \textbf{Secure storage:} Tokens stored safely using AsyncStorage
+    \item \textbf{Password recovery:} Secure password reset via email verification
+    \item \textbf{Persistent sessions:} Automatic token refresh for seamless experience
+\end{itemize}
+\end{primarybox}
+
+\subsubsection{Profile \& Statistics}
+\begin{primarybox}[Profile \& Statistics]
+A comprehensive profile dashboard that tracks user activity, detection history, and security statistics for personal awareness and progress monitoring.
+\begin{itemize}
+    \item \textbf{Profile management:} View and update personal account information
+    \item \textbf{Usage statistics:} Track deepfake scans and job checks performed
+    \item \textbf{Community activity:} Monitor posts created and engagement received
+    \item \textbf{Account details:} Display account creation date and membership information
+\end{itemize}
+\end{primarybox}
+
+\subsection{Machine Learning Backend}
+
+The technical foundation that powers TrustLens's intelligent fraud detection, built with Python and Flask for efficient model serving.
+
+\subsubsection{Flask ML Service}
+\begin{primarybox}[ML Service]
+A Python-based microservice that hosts pretrained machine learning models and provides RESTful APIs for fraud detection.
+\begin{itemize}
+    \item \textbf{Flask API:} Lightweight Python web framework serves ML models efficiently
+    \item \textbf{Pretrained CNN model:} Custom deepfake detector with torchvision transforms
+    \item \textbf{OpenCV processing:} Computer vision library (v4.8.1) for image/video manipulation
+    \item \textbf{NLP-based job classifier:} Pattern recognition model with 50+ fraud keywords
+    \item \textbf{REST endpoints:} Standard HTTP APIs for deepfake and job fraud analysis
+    \item \textbf{Confidence scoring:} Probabilistic scoring (0-100 scale) indicates detection certainty
+\end{itemize}
+\end{primarybox}
+
+\subsection{Admin Features}
+
+Special administrative capabilities for content moderation and community management to maintain platform safety and quality.
+
+\subsubsection{Admin Dashboard}
+\begin{primarybox}[Admin Dashboard]
+Elevated privileges for the designated administrator to moderate content and manage the community platform effectively.
+\begin{itemize}
+    \item \textbf{Admin account:} Single designated admin (sankalpgupta7860@gmail.com)
+    \item \textbf{Content moderation:} Delete any inappropriate posts or comments
+    \item \textbf{Admin badge:} Visual indicator distinguishes admin from regular users
+    \item \textbf{Enhanced privileges:} Special permissions for platform oversight
+    \item \textbf{Community safety:} Monitor and maintain content quality and user protection
+\end{itemize}
+\end{primarybox}
+
+\section{Technologies Used}
+
+\begin{primarybox}[Technology Stack]
+\begin{tabular}{lp{0.7\textwidth}}
+\textbf{\textcolor{primarycolor}{Frontend}} & React Native 0.81.4, Expo SDK 54, TypeScript 5.3, Expo Router 6.0 \\
+\midrule
+\textbf{\textcolor{primarycolor}{Backend}} & Node.js 18, Express 4.18.2, Multer 1.4.5, Axios, CORS, dotenv \\
+\midrule
+\textbf{\textcolor{primarycolor}{ML Service}} & Python 3.11, Flask 3.0.0, PyTorch 2.1.0, torchvision 0.16.0, \\
+& OpenCV 4.8.1, NumPy 1.24.3, Pillow 10.1.0, Werkzeug 3.0.1 \\
+\midrule
+\textbf{\textcolor{primarycolor}{Authentication}} & Supabase Auth (@supabase/supabase-js 2.58.0), JWT, AsyncStorage \\
+\midrule
+\textbf{\textcolor{primarycolor}{Database}} & Supabase (PostgreSQL) for user data and community posts \\
+\midrule
+\textbf{\textcolor{primarycolor}{AI Integration}} & Google Gemini Pro API (@google/generative-ai 0.21.0) \\
+\midrule
+\textbf{\textcolor{primarycolor}{UI Libraries}} & expo-linear-gradient 15.0, expo-blur 15.0, lucide-react-native 0.544, \\
+& react-native-reanimated 4.1, expo-image-picker 17.0 \\
+\midrule
+\textbf{\textcolor{primarycolor}{Development}} & Git, GitHub, VS Code, Expo CLI, npm, \\
+\textbf{\textcolor{primarycolor}{Tools}} & Postman (API testing) \\
+\end{tabular}
+\end{primarybox}
+
+\section{System Architecture}
+
+\begin{primarybox}[Architecture Overview]
+TrustLens follows a modern three-tier microservices architecture:
+
+\vspace{0.5cm}
+\textbf{1. Mobile Frontend (React Native + Expo)}
+\begin{itemize}
+    \item Cross-platform iOS and Android support
+    \item TypeScript for type safety and compile-time error prevention
+    \item Expo Router for file-based navigation
+    \item Context API for global state management (AuthContext)
+    \item AsyncStorage for persistent local data
+    \item Custom themed components with gradient design
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{2. Backend API Gateway (Node.js + Express)}
+\begin{itemize}
+    \item RESTful API architecture with JSON responses
+    \item Multer middleware for multipart file uploads
+    \item Axios HTTP client for ML service communication
+    \item CORS-enabled for cross-origin requests
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{3. ML Service (Python + Flask)}
+\begin{itemize}
+    \item Separate microservice for ML model inference
+    \item Flask REST API for model serving
+    \item OpenCV image/video processing
+    \item NLP-based job fraud classification
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{4. External Services}
+\begin{itemize}
+    \item Supabase for authentication and database
+    \item Google Gemini Pro for AI chatbot conversations
+\end{itemize}
+\end{primarybox}
+
+
+\section{Security Implementation}
+
+\begin{primarybox}[Security Measures]
+\textbf{Authentication \& Authorization}
+\begin{itemize}
+    \item \textbf{Supabase Authentication:} Enterprise-grade auth with encrypted password storage
+    \item \textbf{JWT tokens:} Stateless authentication for secure session management
+    \item \textbf{Secure token storage:} AsyncStorage encrypts and protects tokens on device
+    \item \textbf{Automatic token refresh:} Maintains persistent sessions without re-login
+    \item \textbf{Password recovery:} Secure reset flow via email verification
+    \item \textbf{Role-based access:} Admin privileges for content moderation
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Data Protection}
+\begin{itemize}
+    \item \textbf{HTTPS communications:} All API requests encrypted with SSL/TLS
+    \item \textbf{Environment variables:} Sensitive credentials isolated from source code
+    \item \textbf{No media retention:} Uploaded files deleted immediately after analysis
+    \item \textbf{Automatic cleanup:} Temporary files removed from backend and ML service
+    \item \textbf{Input validation:} File type and size restrictions prevent malicious uploads
+    \item \textbf{Supabase RLS:} Row-level security policies protect user data
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{API Security}
+\begin{itemize}
+    \item \textbf{CORS configuration:} Restricts API access to trusted origins
+    \item \textbf{File size limits:} 50MB maximum prevents denial-of-service attacks
+    \item \textbf{File type validation:} Whitelist approach allows only safe extensions
+    \item \textbf{Error handling:} Generic error messages prevent information leakage
+    \item \textbf{Request logging:} Audit trails for security monitoring
+\end{itemize}
+
+\end{primarybox}
+
+
+\section{Future Scope}
+
+\begin{primarybox}[Future Development Plans]
+\textbf{Enhanced ML Capabilities}
+\begin{itemize}
+    \item Implement advanced deep learning models (ResNet, EfficientNet) for improved accuracy
+    \item Audio deepfake detection for voice manipulation and synthetic speech
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Additional Detection Features}
+\begin{itemize}
+    \item Email phishing analysis with header inspection and link verification
+    \item SMS spam detection using text classification and pattern recognition
+    \item Website credibility checker with domain reputation analysis
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Platform Improvements}
+\begin{itemize}
+    \item Two-factor authentication (2FA) and biometric login (fingerprint, Face ID)
+    \item Batch processing for multiple files simultaneously
+    \item Browser extension for desktop users with seamless integration
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Community \& User Engagement}
+\begin{itemize}
+    \item Real-time chat for security discussions and threat collaboration
+    \item Gamification with points, badges, and leaderboards for active contributors
+    \item Expert verification system with trusted contributor badges
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Analytics \& Enterprise Features}
+\begin{itemize}
+    \item Personal security dashboard with detailed analytics and weekly/monthly reports
+    \item Multi-user organization accounts with admin panel for centralized control
+\end{itemize}
+\end{primarybox}
+
+\section{Conclusion}
+
+\begin{primarybox}[Project Summary]
+\textbf{TrustLens} represents a comprehensive approach to mobile fraud detection, combining cutting-edge machine learning, artificial intelligence, and modern mobile development practices. Developed entirely by \textbf{Sankalp Gupta (2201176)}, the application demonstrates a full-stack implementation of a real-world security solution addressing critical threats in deepfake proliferation and job posting fraud.
+
+The project successfully integrates multiple complex technologies including React Native for cross-platform mobile development, Node.js for backend gateway services, Python Flask for ML model serving, Supabase for authentication and database, and Google Gemini Pro for AI-powered assistance. The implementation of deepfake detection and job fraud analysis showcases practical application of machine learning in cybersecurity.
+
+\vspace{0.3cm}
+\textbf{Key Achievements:}
+\begin{itemize}
+    \item Functional AI-powered fraud detection system with two ML models
+    \item Real-time deepfake analysis for images and videos using CNN
+    \item NLP-based job fraud classification with 50+ fraud indicators
+    \item Secure Supabase authentication with JWT tokens
+    \item Interactive AI security assistant powered by Google Gemini Pro
+    \item Community platform for collective threat intelligence
+    \item Admin moderation system for content safety
+    \item Modern, gradient-themed UI with light mode support
+    \item Comprehensive three-tier microservices architecture
+    \item Detailed documentation and code comments
+\end{itemize}
+
+\vspace{0.3cm}
+The modular architecture allows for easy maintenance and feature expansion, with a clear roadmap for future development. As deepfake technology advances and job scams evolve, TrustLens is positioned to adapt with model updates and enhanced detection capabilities. This project demonstrates not just technical achievement, but a meaningful contribution to digital safety and user empowerment in an age of increasing online threats.
+\end{primarybox}
+
+\clearpage
+
+\section{Screenshots}
+
+\begin{primarybox}[Application Screenshots]
+The following screenshots showcase the key features and interfaces of the TrustLens application.
+\end{primarybox}
+
+% First page of screenshots
+\begin{figure}[!ht]
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{1.png}
+  \caption{Login Screen}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{2.png}
+  \caption{Registration Screen}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{3.png}
+  \caption{Home Dashboard}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{5.png}
+  \caption{Deepfake Detection Interface}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{4.png}
+  \caption{Deepfake Analysis Results}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{6.png}
+  \caption{Job Fraud Checker}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{7.png}
+  \caption{Job Fraud Analysis Results}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{8.png}
+  \caption{AI Chatbot Assistant}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{9.png}
+  \caption{Community Feed}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{10.png}
+  \caption{Community Post with Comments}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{11.png}
+  \caption{User Profile Dashboard}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{12.png}
+  \caption{Feedback Section}
+\end{minipage}
+\end{figure}
+
+\clearpage
+
+\section{Appendix}
+
+\subsection{Repository Information}
+
+\begin{primarybox}[GitHub Repository]
+\textbf{Repository:} Sem-07\_Project \\
+\textbf{Owner:} Sankalp7860 \\
+\textbf{Branch:} main \\
+\textbf{Link:} \url{https://github.com/Sankalp7860/Sem-07_Project} \\
+\textbf{Structure:}
+\begin{itemize}
+    \item \texttt{/app} - React Native mobile application screens
+    \item \texttt{/backend} - Node.js Express API gateway
+    \item \texttt{/ml-service} - Python Flask ML microservice
+    \item \texttt{/components} - Reusable UI components
+    \item \texttt{/lib} - Utilities, contexts, and API clients
+    \item \texttt{/assets} - Images and static resources
+    \item Documentation files in root directory
+\end{itemize}
+\end{primarybox}
+
+\subsection{References}
+
+\begin{itemize}
+    \item React Native Documentation: \url{https://reactnative.dev}
+    \item Expo Documentation: \url{https://docs.expo.dev}
+    \item PyTorch Documentation: \url{https://pytorch.org/docs}
+    \item Flask Documentation: \url{https://flask.palletsprojects.com}
+    \item OpenCV Python: \url{https://docs.opencv.org/4.x/}
+    \item Google Gemini API: \url{https://ai.google.dev}
+    \item Supabase Documentation: \url{https://supabase.com/docs}
+    \item torchvision Transforms: \url{https://pytorch.org/vision/stable/transforms.html}
+    \item Node.js Documentation: \url{https://nodejs.org/en/docs}
+    \item Express.js Guide: \url{https://expressjs.com/en/guide/routing.html}
+\end{itemize}
+
+\end{document}

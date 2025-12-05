@@ -39,6 +39,9 @@ interface Post {
 
 export default function CommunityScreen() {
   const { user } = useAuth();
+  const ADMIN_EMAIL = 'sankalpgupta7860@gmail.com';
+  const isAdmin = user?.email === ADMIN_EMAIL;
+  
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -271,7 +274,14 @@ export default function CommunityScreen() {
       <LinearGradient colors={['#6366f1', '#8b5cf6']} style={styles.header}>
         <View style={styles.headerContent}>
           <View>
-            <Text style={styles.headerTitle}>Community</Text>
+            <View style={styles.headerTitleRow}>
+              <Text style={styles.headerTitle}>Community</Text>
+              {isAdmin && (
+                <View style={styles.adminBadgeHeader}>
+                  <Text style={styles.adminBadgeTextHeader}>ADMIN</Text>
+                </View>
+              )}
+            </View>
             <Text style={styles.headerSubtitle}>Share your thoughts</Text>
           </View>
           <TouchableOpacity
@@ -305,7 +315,14 @@ export default function CommunityScreen() {
                     <UserIcon color="#6366f1" size={20} />
                   </View>
                   <View style={styles.postInfo}>
-                    <Text style={styles.userName}>{post.user_email}</Text>
+                    <View style={styles.userNameRow}>
+                      <Text style={styles.userName}>{post.user_email}</Text>
+                      {post.user_email === ADMIN_EMAIL && (
+                        <View style={styles.adminBadge}>
+                          <Text style={styles.adminBadgeText}>ADMIN</Text>
+                        </View>
+                      )}
+                    </View>
                     <Text style={styles.postDate}>{formatDate(post.created_at)}</Text>
                   </View>
                 </View>
@@ -331,7 +348,7 @@ export default function CommunityScreen() {
                     <MessageCircle color="#6b7280" size={20} />
                     <Text style={styles.actionText}>{post.comment_count || 0}</Text>
                   </TouchableOpacity>
-                  {post.user_email === user?.email && (
+                  {(post.user_email === user?.email || isAdmin) && (
                     <TouchableOpacity
                       style={[styles.actionButton, styles.deleteButton]}
                       onPress={() => handleDeletePost(post.id)}
@@ -436,14 +453,21 @@ export default function CommunityScreen() {
                           <UserIcon color="#6366f1" size={16} />
                         </View>
                         <View style={styles.commentInfo}>
-                          <Text style={styles.commentUserName}>
-                            {comment.user_email}
-                          </Text>
+                          <View style={styles.userNameRow}>
+                            <Text style={styles.commentUserName}>
+                              {comment.user_email}
+                            </Text>
+                            {comment.user_email === ADMIN_EMAIL && (
+                              <View style={styles.adminBadgeSmall}>
+                                <Text style={styles.adminBadgeTextSmall}>ADMIN</Text>
+                              </View>
+                            )}
+                          </View>
                           <Text style={styles.commentDate}>
                             {formatDate(comment.created_at)}
                           </Text>
                         </View>
-                        {comment.user_email === user?.email && (
+                        {(comment.user_email === user?.email || isAdmin) && (
                           <TouchableOpacity
                             onPress={() =>
                               handleDeleteComment(comment.id, selectedPostId!)
@@ -501,6 +525,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  headerTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -510,6 +539,19 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 14,
     color: '#e0e7ff',
+  },
+  adminBadgeHeader: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+    marginBottom: 4,
+  },
+  adminBadgeTextHeader: {
+    color: 'white',
+    fontSize: 11,
+    fontWeight: 'bold',
+    letterSpacing: 1,
   },
   createButton: {
     width: 48,
@@ -727,5 +769,34 @@ const styles = StyleSheet.create({
   sendCommentButton: {
     padding: 8,
     marginLeft: 8,
+  },
+  userNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  adminBadge: {
+    backgroundColor: '#6366f1',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  adminBadgeText: {
+    color: 'white',
+    fontSize: 9,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+  },
+  adminBadgeSmall: {
+    backgroundColor: '#6366f1',
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    borderRadius: 3,
+  },
+  adminBadgeTextSmall: {
+    color: 'white',
+    fontSize: 8,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
 });
