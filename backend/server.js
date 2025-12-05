@@ -114,5 +114,5 @@ function mapStatusToResult(status) {
 // Start server
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
-  console.log(`Reality Defender API initialized`);
+  console.log(`Backend initialized`);
 });
