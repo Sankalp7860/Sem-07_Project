@@ -1,6 +1,6 @@
 # TruthGuard - AI Fraud Detection App
 
-A production-ready React Native + Expo application for detecting deepfakes and fraudulent job postings using AI.
+A production-ready React Native + Expo application for detecting deepfakes and fraudulent job postings.
 
 ## Features
 
